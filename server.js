@@ -1,4 +1,5 @@
 const http = require('http');
+
 // var fs = require('fs');
 // var path = require('path');
 // const { log } = require('console');
@@ -22,22 +23,15 @@ const http = require('http');
 
 const server = http.createServer((req, res) => {
    console.log(`${req.method} request for ${req.url}`);
-   process.exit();
+   res.setHeader("Content-Type","text/html");
+   res.write("<html>");
+   res.write("<head><title>first server</title></head>");
+   res.write("<body>");
+   res.write("<h1>Hello Khatir</h1>")
+   res.write("</body>");
+   res.write("</html>");
+   res.end();
+   // process.exit();
 });
 
-server.listen(3000);
-// // create http server
-// var server = http.createServer(function(request, response) {
-//     var filePath = false;
-//     // default file
-//     if (request.url == '/') {
-//         filePath = 'public/index.html';
-//     // translate url path to relative file path
-//     } else {
-//         filePath = 'public' + request.url;
-//     }
-//     // get absolute file path
-//     var absPath = './' + filePath;
-//     // serve static file
-//     serveStatic(response, cache, absPath);
-// });
+server.listen(3050);

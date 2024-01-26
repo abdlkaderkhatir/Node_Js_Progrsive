@@ -1,11 +1,4 @@
-const http = require('http');
-
-// var fs = require('fs');
-// var path = require('path');
-// const { log } = require('console');
-
-// explain whats mime
-// mime is a module that provides ability to derive a MIME type based on filename extension
+const http = require("http");
 
 // Status codes and their meaning
 // 200 ok
@@ -22,16 +15,31 @@ const http = require('http');
 // 504 gateway timeout
 
 const server = http.createServer((req, res) => {
-   console.log(`${req.method} request for ${req.url}`);
-   res.setHeader("Content-Type","text/html");
-   res.write("<html>");
-   res.write("<head><title>first server</title></head>");
-   res.write("<body>");
-   res.write("<h1>Hello Khatir</h1>")
-   res.write("</body>");
-   res.write("</html>");
-   res.end();
-   // process.exit();
+  console.log(`${req.method} request for ${req.url}`);
+  res.setHeader("Content-Type", "text/html");
+  if (req.url === "/") {
+    // add form here
+    res.write("<html>");
+    res.write("<head><title>first server</title></head>");
+    res.write("<body>");
+    res.write("<h1>Hello Khatir</h1>");
+    res.write("<form method='GET' action='/'>");
+    res.write("<input type='text' name='username' />");
+    res.write("<input type='submit' value='submit' />");
+    res.write("</form>");
+    res.write("</body>");
+    res.write("</html>");
+  } else if (req.url === "/about") {
+    res.write("<html>");
+    res.write("<head><title>first server</title></head>");
+    res.write("<body>");
+    res.write("<h1>Hello Khatir</h1>");
+    res.write("</body>");
+    res.write("</html>");
+  }
+
+  res.end();
+  // process.exit();
 });
 
 server.listen(3050);

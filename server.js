@@ -23,10 +23,19 @@ const server = http.createServer((req, res) => {
     res.write("<head><title>first server</title></head>");
     res.write("<body>");
     res.write("<h1>Hello Khatir</h1>");
-    res.write("<form method='GET' action='/'>");
+    res.write("<form method='POST' action='/message'>");
     res.write("<input type='text' name='username' />");
     res.write("<input type='submit' value='submit' />");
     res.write("</form>");
+    res.write("</body>");
+    res.write("</html>");
+  } else if (req.url === "/message" && req.method === "POST") {
+    // add form here
+    res.write("<html>");
+    res.write("<head><title>first server</title></head>");
+    res.write("<body>");
+    res.write("<h1>Hello Khatir</h1>");
+    res.write("<h2>Message received</h2>");
     res.write("</body>");
     res.write("</html>");
   } else if (req.url === "/about") {

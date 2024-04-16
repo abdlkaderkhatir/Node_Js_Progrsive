@@ -1,4 +1,5 @@
 const http = require("http");
+const fs = require("fs");
 
 // Status codes and their meaning
 // 200 ok
@@ -29,25 +30,33 @@ const server = http.createServer((req, res) => {
     res.write("</form>");
     res.write("</body>");
     res.write("</html>");
+    return res.end();
   } else if (req.url === "/message" && req.method === "POST") {
     // add form here
-    res.write("<html>");
-    res.write("<head><title>first server</title></head>");
-    res.write("<body>");
-    res.write("<h1>Hello Khatir</h1>");
-    res.write("<h2>Message received</h2>");
-    res.write("</body>");
-    res.write("</html>");
-  } else if (req.url === "/about") {
-    res.write("<html>");
-    res.write("<head><title>first server</title></head>");
-    res.write("<body>");
-    res.write("<h1>Hello Khatir</h1>");
-    res.write("</body>");
-    res.write("</html>");
+    const body = [];
+    req.on("data", (chunk) => {
+      body.push(chunk);
+    });
+    return req.on("end", () => {
+      const parsedbody = Buffer.concat(body).toString();
+      const message = parsedbody.split("=")[1];
+      fs.writeFile("message.txt", message, () => {
+        res.statusCode = 302;
+        res.setHeader("Location", "/");
+        return res.end();
+      });
+    });
   }
-
+  // else if (req.url === "/about") {
+  res.write("<html>");
+  res.write("<head><title>first server</title></head>");
+  res.write("<body>");
+  res.write("<h1>Hello Khatir</h1>");
+  res.write("</body>");
+  res.write("</html>");
   res.end();
+  // }
+
   // process.exit();
 });
 
